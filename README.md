@@ -1,36 +1,33 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# SmartMark: A Real-Time Bookmark Manager
 
-## Getting Started
+I built this app to solve a simple problem: managing bookmarks across different tabs instantly without hitting the refresh button. This project was a great way for me to dive deep into **Next.js**, **Tailwind CSS**, and the real-time capabilities of **Supabase**.
 
-First, run the development server:
+## What it does
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+- **Smooth Google Login**: No need for passwords; just jump in with your Google account.
+- **Always in Sync**: If you add or delete a link in one tab, the other one updates right before your eyes.
+- **Total Privacy**: I used Row-Level Security so your bookmarks stay yours—no one else can see them.
+- **Mobile Friendly**: It looks just as good on your phone as it does on your laptop.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## My Tech Stack
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+- **Framework**: Next.js (App Router)
+- **Styling**: Tailwind CSS
+- **Database & Auth**: Supabase (PostgreSQL)
+- **Hosting**: Vercel
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## The "Aha!" Moments (Challenges I Solved)
 
-## Learn More
+### Making Deletes "Live"
 
-To learn more about Next.js, take a look at the following resources:
+One of the trickiest parts was getting the "Delete" button to update in real-time across multiple tabs. At first, it would only work for new bookmarks. I figured out that I needed to change the table's identity in the database (`REPLICA IDENTITY FULL`) so Supabase would actually send the delete signal to other tabs. It was a great lesson in how databases talk to the frontend.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### Locking Down Data
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Privacy is a big deal. I spent a good amount of time writing custom SQL policies in Supabase. I wanted to make sure that even if someone knew your bookmark ID, they couldn't touch it unless they were logged in as you.
 
-## Deploy on Vercel
+### Solving the "Infinite Loading" Screen
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+I ran into an issue where the app would just stay on "Loading..." if the user wasn't signed in. I had to rethink how my `useEffect` hooks were checking for sessions to make sure the app knew exactly when to show the login screen and when to show the dashboard.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Developed by **Veda Shiva Prasad**
