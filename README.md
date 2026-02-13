@@ -16,7 +16,7 @@ I built this app to solve a simple problem: managing bookmarks across different 
 - **Database & Auth**: Supabase (PostgreSQL)
 - **Hosting**: Vercel
 
-## The "Aha!" Moments (Challenges I Solved)
+## Technical Challenges & Solutions
 
 ### Making Deletes "Live"
 
